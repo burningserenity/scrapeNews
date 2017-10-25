@@ -1,0 +1,34 @@
+{
+  "name": "scrapenews",
+  "version": "1.0.0",
+  "description": "Web app for scraping news and saving to Mongo database",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/burningserenity/scrapeNews.git"
+  },
+  "keywords": [
+    "mongodb",
+    "cheerio",
+    "scraping"
+  ],
+  "author": "burningserenity",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/burningserenity/scrapeNews/issues"
+  },
+  "homepage": "https://github.com/burningserenity/scrapeNews#readme",
+  "dependencies": {
+    "axios": "^0.17.0",
+    "body-parser": "^1.18.2",
+    "cheerio": "^1.0.0-rc.2",
+    "express": "^4.16.2",
+    "express-handlebars": "^3.0.0",
+    "mongoose": "^4.12.4",
+    "morgan": "^1.9.0",
+    "request": "^2.83.0"
+  }
+}
