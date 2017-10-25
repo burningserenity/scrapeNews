@@ -6,18 +6,23 @@ const Schema = mongoose.Schema;
 const ArticleSchema = new Schema({
     title: {
         type: String,
-        required: true
+        required: true,
+        trim: true,
+        unique: true,
+        dropDups: true
     },
     link: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     summary: {
+        type: String
+    },
+    siteName: {
         type: String,
         required: true
     },
-    site: {
+    siteURL: {
         type: String,
         required: true
     },

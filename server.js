@@ -27,25 +27,37 @@ mongoose.connect("mongodb://localhost/newsscraper" || "mongodb://heroku_brhbx6dt
     useMongoClient: true
 });
 
+// Function to check if .each is done
+const asyncPITA = function(i, list, res) {
+    if (i == list.length - 1) res.send("done!");
+    else return;
+};
+
 app.get("/", (req, res) => {
+    // Scrape articles from Clickhole
     axios.get("http://www.clickhole.com/features/news/").then((response) => {
         const $ = cheerio.load(response.data);
         $("h2.headline").each(function(i, element) {
             const result = {};
+            result.siteURL = "http://www.clickhole.com";
+            result.siteName = "Clickhole";
             result.title = $(this)
                 .children("a")
                 .text();
             result.link = $(this)
                 .children("a")
                 .attr("href");
+            // Scrape from each article to get first paragraph, since main page lacks summaries
             axios.get(`http://www.clickhole.com${result.link}`).then((nestResponse) => {
                 const $$ = cheerio.load(nestResponse.data);
                 result.summary = $$("div.article-text")
                     .children("p")
                     .first()
                     .text();
-                console.log(`\n${result.summary}\n`);
-            })
+                db.Article
+                    .create(result);
+            });
+            asyncPITA(i, $('h2.headline'), res);
         });
     });
 });
@@ -53,3 +65,5 @@ app.get("/", (req, res) => {
 app.listen(port, () => {
     console.log("Listening on port " + port + "...");
 });
+
+
